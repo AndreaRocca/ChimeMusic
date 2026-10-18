@@ -15,6 +15,12 @@
 #chimeleta-butterfly-svg .chimeleta-interactive-node.node-active { filter:drop-shadow(0 0 14px currentColor) brightness(1.5); }
 #chimeleta-butterfly-svg .chimeleta-gnd-terminal.gnd-active { filter:drop-shadow(0 0 12px #35dce2) brightness(1.4); }
 </style>
+<style id="connection-clip-mascots">
+.crocodile-mascot-svg.connection-clip { width:120px; height:110px; overflow:visible; }
+.connection-clip .clip-upper-jaw { transform-box:view-box; transform-origin:94px 76px; transition:transform .12s ease; }
+.mascot-wrapper.jaw-snap .connection-clip .clip-upper-jaw { transform:rotate(12deg); }
+@media (prefers-reduced-motion:reduce) { .connection-clip .clip-upper-jaw { transition:none; } }
+</style>
 </head>
 <body>
 
@@ -198,32 +204,43 @@
           <div class="mascot-wrapper" id="mascot-copi-box">
             <div class="mascot-speech-bubble" id="copi-speech">¡Hacé contacto! ⚡</div>
             <!-- SVG Ilustración de la Pinza Cocodrilo Azul "Copi" -->
-            <svg class="crocodile-mascot-svg" id="mascot-copi" viewBox="0 0 120 150">
-              <!-- Cable flexible que viene de abajo -->
-              <path d="M 60,145 Q 30,125 55,95" fill="none" stroke="#0077b6" stroke-width="8" stroke-linecap="round"/>
-              <!-- Cuerpo / Manga de silicona azul de la pinza -->
-              <path d="M 40,95 C 40,75 50,65 58,62 C 66,65 76,75 76,95 C 76,105 40,105 40,95 Z" fill="#0096c7" stroke="#023e8a" stroke-width="3"/>
-              <!-- Mandíbula metálica superior con dientes -->
-              <path d="M 50,62 L 50,30 L 56,22 L 62,30 L 62,62 Z" fill="#ced4da" stroke="#495057" stroke-width="2"/>
-              <!-- Dientes de cocodrilo -->
-              <polygon points="50,34 54,38 50,42" fill="#fff"/>
-              <polygon points="50,46 54,50 50,54" fill="#fff"/>
-              <polygon points="62,34 58,38 62,42" fill="#fff"/>
-              <polygon points="62,46 58,50 62,54" fill="#fff"/>
-              <!-- Remache / Eje de pivote -->
-              <circle cx="58" cy="58" r="4" fill="#ffd166" stroke="#b07d10" stroke-width="1.5"/>
-              <!-- Ojos tiernos saltones -->
-              <g class="mascot-eyes">
-                <circle cx="48" cy="74" r="8" fill="#ffffff" stroke="#023e8a" stroke-width="2"/>
-                <circle cx="68" cy="74" r="8" fill="#ffffff" stroke="#023e8a" stroke-width="2"/>
-                <circle class="pupil pupil-left" cx="49" cy="74" r="4" fill="#1d3557"/>
-                <circle class="pupil pupil-right" cx="69" cy="74" r="4" fill="#1d3557"/>
-                <circle cx="47" cy="72" r="1.5" fill="#ffffff"/>
-                <circle cx="67" cy="72" r="1.5" fill="#ffffff"/>
-              </g>
-              <!-- Sonrisa simpática en la funda -->
-              <path d="M 52,86 Q 58,92 64,86" fill="none" stroke="#023e8a" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+            <svg class="crocodile-mascot-svg connection-clip" id="mascot-copi" viewBox="0 0 180 160" role="img" aria-label="copi, pinza cocodrilo de conexión">
+ <defs>
+  <linearGradient id="copi-metal" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".35" stop-color="#c8d8e3"/><stop offset=".65" stop-color="#718696"/><stop offset="1" stop-color="#dce8ee"/></linearGradient>
+  <linearGradient id="copi-sleeve" x2="0" y2="1"><stop stop-color="#6feaff"/><stop offset=".5" stop-color="#009bd1"/><stop offset="1" stop-color="#035479"/></linearGradient>
+ </defs>
+ <!-- El cable sale de la funda aislante, detrás del mecanismo. -->
+ <path d="M145 100 C176 116 151 140 125 133 S95 145 109 155" fill="none" stroke="#035479" stroke-width="10" stroke-linecap="round"/>
+ <path d="M145 99 C176 115 151 139 125 132" fill="none" stroke="#6feaff" stroke-width="3" stroke-linecap="round"/>
+ <g transform="rotate(-18 90 80)">
+  <!-- Mordaza inferior: chapa, dientes y hueco entre ambas mandíbulas. -->
+  <path d="M20 90 L90 70 L110 82 L95 99 L25 104 Z" fill="url(#copi-metal)" stroke="#435565" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M26 91 L34 85 L39 91 L46 81 L52 87 L59 77 L65 83 L72 74 L79 80 L88 71" fill="#f0f7fa" stroke="#586e7d" stroke-width="2"/>
+  <!-- Funda trasera alargada, característica de una pinza de conexión. -->
+  <path d="M83 62 Q100 51 119 62 L151 78 Q159 85 151 98 L142 107 Q136 111 126 105 L91 87 Z" fill="url(#copi-sleeve)" stroke="#035479" stroke-width="3"/>
+  <path d="M114 67 L104 86 M126 73 L116 93 M138 79 L129 100" stroke="#035479" stroke-width="3" opacity=".4"/>
+  <path d="M119 64 L146 79" stroke="#6feaff" stroke-width="4" stroke-linecap="round"/>
+  <!-- Mordaza superior articulada: hocico ancho con dientes visibles. -->
+  <g class="clip-upper-jaw">
+   <path d="M18 66 L75 53 Q88 51 102 66 L91 81 L23 80 Z" fill="url(#copi-metal)" stroke="#435565" stroke-width="3" stroke-linejoin="round"/>
+   <path d="M24 79 L31 85 L37 77 L44 83 L50 75 L57 81 L63 73 L70 79 L76 71 L83 77 L90 70" fill="#eaf3f8" stroke="#526979" stroke-width="2"/>
+   <path d="M27 66 L69 58" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+   <path d="M70 52 Q81 43 98 54 L112 65 L100 81 L83 68 Z" fill="url(#copi-sleeve)" stroke="#035479" stroke-width="2"/>
+  </g>
+  <!-- Remache y muelle visibles. -->
+  <circle cx="94" cy="76" r="9" fill="#536673" stroke="#e4edf2" stroke-width="3"/>
+  <circle cx="94" cy="76" r="3" fill="#b9cbd5"/>
+  <path d="M101 88 l5 -5 l1 8 l6 -5 l1 8 l6 -5" fill="none" stroke="#dae5eb" stroke-width="2"/>
+  <!-- Ojos sobre la funda, sin ocultar el mecanismo de pinza. -->
+  <g class="mascot-eyes">
+   <circle cx="80" cy="47" r="12" fill="#fff" stroke="#035479" stroke-width="3"/>
+   <circle cx="103" cy="51" r="12" fill="#fff" stroke="#035479" stroke-width="3"/>
+   <circle class="pupil pupil-left" cx="77" cy="48" r="5" fill="#17283a"/>
+   <circle class="pupil pupil-right" cx="100" cy="52" r="5" fill="#17283a"/>
+   <circle cx="75" cy="46" r="2" fill="#fff"/><circle cx="98" cy="50" r="2" fill="#fff"/>
+  </g>
+ </g>
+</svg>
             <span class="mascot-name">COPI</span>
           </div>
         </aside>
@@ -471,23 +488,43 @@
 
             <!-- Mascota Pinza Cocodrilo Amarilla "Dili" -->
             <div class="mascot-wrapper" id="mascot-dili-box">
-              <svg class="crocodile-mascot-svg" id="mascot-dili" viewBox="0 0 120 130">
-                <path d="M 60,125 Q 85,110 65,85" fill="none" stroke="#e09f3e" stroke-width="8" stroke-linecap="round"/>
-                <path d="M 40,85 C 40,65 50,55 58,52 C 66,55 76,65 76,85 C 76,95 40,95 40,85 Z" fill="#ffb703" stroke="#b07d10" stroke-width="3"/>
-                <path d="M 50,52 L 50,22 L 56,14 L 62,22 L 62,52 Z" fill="#ced4da" stroke="#495057" stroke-width="2"/>
-                <polygon points="50,26 54,30 50,34" fill="#fff"/>
-                <polygon points="62,26 58,30 62,34" fill="#fff"/>
-                <circle cx="58" cy="48" r="4" fill="#d90429" stroke="#590d22" stroke-width="1.5"/>
-                <g class="mascot-eyes">
-                  <circle cx="48" cy="65" r="7.5" fill="#ffffff" stroke="#b07d10" stroke-width="2"/>
-                  <circle cx="68" cy="65" r="7.5" fill="#ffffff" stroke="#b07d10" stroke-width="2"/>
-                  <circle class="pupil pupil-left" cx="49" cy="65" r="3.5" fill="#000"/>
-                  <circle class="pupil pupil-right" cx="69" cy="65" r="3.5" fill="#000"/>
-                  <circle cx="47" cy="63" r="1.5" fill="#ffffff"/>
-                  <circle cx="67" cy="63" r="1.5" fill="#ffffff"/>
-                </g>
-                <path d="M 52,76 Q 58,82 64,76" fill="none" stroke="#7f4f00" stroke-width="2.5" stroke-linecap="round"/>
-              </svg>
+              <svg class="crocodile-mascot-svg connection-clip" id="mascot-dili" viewBox="0 0 180 160" role="img" aria-label="dili, pinza cocodrilo de conexión">
+ <defs>
+  <linearGradient id="dili-metal" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".35" stop-color="#c8d8e3"/><stop offset=".65" stop-color="#718696"/><stop offset="1" stop-color="#dce8ee"/></linearGradient>
+  <linearGradient id="dili-sleeve" x2="0" y2="1"><stop stop-color="#fff095"/><stop offset=".5" stop-color="#ffc21a"/><stop offset="1" stop-color="#a35c06"/></linearGradient>
+ </defs>
+ <!-- El cable sale de la funda aislante, detrás del mecanismo. -->
+ <path d="M145 100 C176 116 151 140 125 133 S95 145 109 155" fill="none" stroke="#a35c06" stroke-width="10" stroke-linecap="round"/>
+ <path d="M145 99 C176 115 151 139 125 132" fill="none" stroke="#fff095" stroke-width="3" stroke-linecap="round"/>
+ <g transform="rotate(-18 90 80)">
+  <!-- Mordaza inferior: chapa, dientes y hueco entre ambas mandíbulas. -->
+  <path d="M20 90 L90 70 L110 82 L95 99 L25 104 Z" fill="url(#dili-metal)" stroke="#435565" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M26 91 L34 85 L39 91 L46 81 L52 87 L59 77 L65 83 L72 74 L79 80 L88 71" fill="#f0f7fa" stroke="#586e7d" stroke-width="2"/>
+  <!-- Funda trasera alargada, característica de una pinza de conexión. -->
+  <path d="M83 62 Q100 51 119 62 L151 78 Q159 85 151 98 L142 107 Q136 111 126 105 L91 87 Z" fill="url(#dili-sleeve)" stroke="#a35c06" stroke-width="3"/>
+  <path d="M114 67 L104 86 M126 73 L116 93 M138 79 L129 100" stroke="#a35c06" stroke-width="3" opacity=".4"/>
+  <path d="M119 64 L146 79" stroke="#fff095" stroke-width="4" stroke-linecap="round"/>
+  <!-- Mordaza superior articulada: hocico ancho con dientes visibles. -->
+  <g class="clip-upper-jaw">
+   <path d="M18 66 L75 53 Q88 51 102 66 L91 81 L23 80 Z" fill="url(#dili-metal)" stroke="#435565" stroke-width="3" stroke-linejoin="round"/>
+   <path d="M24 79 L31 85 L37 77 L44 83 L50 75 L57 81 L63 73 L70 79 L76 71 L83 77 L90 70" fill="#eaf3f8" stroke="#526979" stroke-width="2"/>
+   <path d="M27 66 L69 58" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+   <path d="M70 52 Q81 43 98 54 L112 65 L100 81 L83 68 Z" fill="url(#dili-sleeve)" stroke="#a35c06" stroke-width="2"/>
+  </g>
+  <!-- Remache y muelle visibles. -->
+  <circle cx="94" cy="76" r="9" fill="#536673" stroke="#e4edf2" stroke-width="3"/>
+  <circle cx="94" cy="76" r="3" fill="#b9cbd5"/>
+  <path d="M101 88 l5 -5 l1 8 l6 -5 l1 8 l6 -5" fill="none" stroke="#dae5eb" stroke-width="2"/>
+  <!-- Ojos sobre la funda, sin ocultar el mecanismo de pinza. -->
+  <g class="mascot-eyes">
+   <circle cx="80" cy="47" r="12" fill="#fff" stroke="#a35c06" stroke-width="3"/>
+   <circle cx="103" cy="51" r="12" fill="#fff" stroke="#a35c06" stroke-width="3"/>
+   <circle class="pupil pupil-left" cx="77" cy="48" r="5" fill="#17283a"/>
+   <circle class="pupil pupil-right" cx="100" cy="52" r="5" fill="#17283a"/>
+   <circle cx="75" cy="46" r="2" fill="#fff"/><circle cx="98" cy="50" r="2" fill="#fff"/>
+  </g>
+ </g>
+</svg>
               <div class="mascot-speech-bubble" id="dili-speech">¡Qué buen ritmo! 🎶</div>
               <span class="mascot-name">DILI</span>
             </div>
