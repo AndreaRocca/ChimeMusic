@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Chimeleta: Encendé el ritmo - Videojuego Musical</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Fredoka:wght@500;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+<style>
+/* Ilustración integrada: conserva los eventos de game.js. */
+.chimeleta-illustration-wrapper #chimeleta-butterfly-svg { width:100%; max-width:280px; height:auto; overflow:visible; }
+#chimeleta-butterfly-svg .chimeleta-interactive-node { cursor:default; }
+#chimeleta-butterfly-svg .chimeleta-interactive-node.node-active { filter:drop-shadow(0 0 14px currentColor) brightness(1.5); }
+#chimeleta-butterfly-svg .chimeleta-gnd-terminal.gnd-active { filter:drop-shadow(0 0 12px #35dce2) brightness(1.4); }
+</style>
+</head>
+<body>
+
+  <!-- CONTENEDOR PRINCIPAL DEL JUEGO -->
+  <div id="game-app">
+
+    <!-- PANTALLA DE INICIO / SPLASH SCREEN ("Chimeleta: Encendé el ritmo") -->
+    <div id="start-screen" class="start-screen-overlay">
+      <div class="start-card">
+        <!-- Logo artesanal inspirado en Chimeleta (Mariposa + Resistencias + Pinzas Cocodrilo) -->
+        <div class="logo-container">
+          <div class="logo-title-wrap">
+            <span class="logo-letter l-c">C</span>
+            <span class="logo-letter l-h">
+              <svg class="resistor-svg" viewBox="0 0 34 50">
+                <rect x="14" y="2" width="6" height="46" fill="#888" rx="2"/>
+                <rect x="9" y="8" width="16" height="34" fill="#deb887" rx="4"/>
+                <rect x="9" y="14" width="16" height="4" fill="#e62020"/>
+                <rect x="9" y="21" width="16" height="4" fill="#f0c000"/>
+                <rect x="9" y="28" width="16" height="4" fill="#8b4513"/>
+                <rect x="9" y="34" width="16" height="3" fill="#ffd700"/>
+              </svg>
+              H
+            </span>
+            <span class="logo-letter l-i">I</span>
+            <!-- Mariposa como la M del logo -->
+            <span class="logo-letter l-m">
+              <svg class="butterfly-logo-icon" viewBox="0 0 60 50">
+                <path d="M 30,25 C 22,10 6,4 4,18 C 2,30 18,34 28,27 C 18,34 8,44 14,48 C 22,50 28,40 30,30 C 32,40 38,50 46,48 C 52,44 42,34 32,27 C 42,34 58,30 56,18 C 54,4 38,10 30,25 Z" fill="#ff5e00"/>
+                <circle cx="16" cy="18" r="3" fill="#ffd000"/>
+                <circle cx="44" cy="18" r="3" fill="#00d4ff"/>
+                <circle cx="30" cy="22" r="2.5" fill="#ffffff"/>
+              </svg>
+            </span>
+            <span class="logo-letter l-e1">E</span>
+            <span class="logo-letter l-l">L</span>
+            <span class="logo-letter l-e2">E</span>
+            <!-- T con pines y contactos tipo protoboard -->
+            <span class="logo-letter l-t">
+              <svg class="pcb-t-svg" viewBox="0 0 36 50">
+                <rect x="4" y="6" width="28" height="8" rx="3" fill="#c27d38"/>
+                <circle cx="8" cy="10" r="2" fill="#ffd700"/>
+                <circle cx="18" cy="10" r="2" fill="#ffd700"/>
+                <circle cx="28" cy="10" r="2" fill="#ffd700"/>
+                <rect x="14" y="14" width="8" height="30" rx="3" fill="#c27d38"/>
+                <circle cx="18" cy="24" r="2" fill="#ffd700"/>
+                <circle cx="18" cy="38" r="2" fill="#ffd700"/>
+              </svg>
+              T
+            </span>
+            <span class="logo-letter l-a">A</span>
+          </div>
+
+          <!-- Cable y pinza cocodrilo decorativa que une el logo -->
+          <svg class="decorative-clip-cable" viewBox="0 0 380 40">
+            <path d="M 10,25 Q 90,-5 200,20 T 370,15" fill="none" stroke="#00b4d8" stroke-width="4" stroke-linecap="round"/>
+            <!-- Pinza cocodrilo izquierda -->
+            <g transform="translate(4, 20) rotate(-15)">
+              <rect x="0" y="-5" width="16" height="10" rx="3" fill="#0077b6"/>
+              <polygon points="16,-4 25,-1 16,1" fill="#bbb"/>
+              <polygon points="16,4 25,1 16,-1" fill="#bbb"/>
+            </g>
+            <!-- Pinza cocodrilo derecha -->
+            <g transform="translate(365, 12) rotate(15)">
+              <rect x="-16" y="-5" width="16" height="10" rx="3" fill="#0077b6"/>
+              <polygon points="-16,-4 -25,-1 -16,1" fill="#bbb"/>
+              <polygon points="-16,4 -25,1 -16,-1" fill="#bbb"/>
+            </g>
+          </svg>
+
+          <h2 class="logo-tagline">⚡ ENCENDÉ EL RITMO ⚡</h2>
+        </div>
+
+        <p class="start-description">
+          ¡Conectá tu <strong>Chimeleta</strong>! Colocate la <strong>pulsera o anillo conductor GND</strong> (conectada al contacto izquierdo).
+          Al tocar los contactos físicos <strong>←, ↓, ↑, →</strong> o la <strong>barra espaciadora</strong> con tus dedos, tu cuerpo cierra el circuito a tierra y enciende el ritmo.
+        </p>
+
+        <!-- Botones de Acción de Inicio -->
+        <div class="start-actions">
+          <button id="btn-start-game" class="arcade-btn btn-primary start-big-btn" tabindex="-1">
+            <span class="btn-icon">▶</span> ¡CONECTAR Y JUGAR!
+          </button>
+          
+          <div class="start-secondary-actions">
+            <label class="toggle-control splash-toggle" title="Aprende sin riesgo de abucheo y a menor velocidad">
+              <input type="checkbox" id="splash-practice-toggle" tabindex="-1">
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">🎸 MODO PRÁCTICA</span>
+            </label>
+
+            <button id="btn-splash-open-test" class="arcade-btn btn-highlight" tabindex="-1">
+              ⚡ PROBAR CONTROL CHIMELETA
+            </button>
+          </div>
+        </div>
+
+        <!-- Leyenda de los 5 contactos físicos + Masa GND -->
+        <div class="start-contacts-legend">
+          <div class="contact-pill c-gnd"><span class="k-arrow">⚡</span> GND (Contacto Izq: Pulsera/Anillo Conductor)</div>
+          <div class="contact-pill c-green"><span class="k-arrow">←</span> Izq (Ala Sup. Izq)</div>
+          <div class="contact-pill c-red"><span class="k-arrow">↓</span> Abajo (Centro Inferior)</div>
+          <div class="contact-pill c-yellow"><span class="k-arrow">↑</span> Arriba (Centro Superior)</div>
+          <div class="contact-pill c-blue"><span class="k-arrow">→</span> Der (Ala Sup. Der)</div>
+          <div class="contact-pill c-orange"><span class="k-arrow">␣</span> Espacio (Ala Inf. Der)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA SUPERIOR / HUD ESTILO CHIMELETA -->
+    <header id="hud">
+      <!-- Marca discreta durante la partida -->
+      <div class="hud-brand-mark">
+        <svg class="brand-mini-butterfly" viewBox="0 0 32 26">
+          <path d="M 16,13 C 12,5 4,2 2,10 C 1,16 9,18 15,14 C 9,18 4,24 8,26 C 12,27 15,22 16,16 C 17,22 20,27 24,26 C 28,24 23,18 17,14 C 23,18 31,16 30,10 C 28,2 20,5 16,13 Z" fill="#ff7700"/>
+          <circle cx="16" cy="13" r="2" fill="#fff"/>
+        </svg>
+        <div class="brand-texts">
+          <span class="brand-title">CHIMELETA</span>
+          <span class="brand-sub">ENCENDÉ EL RITMO</span>
+        </div>
+      </div>
+
+      <div class="hud-box score-box">
+        <span class="hud-label">PUNTAJE</span>
+        <span id="score-display" class="hud-value">000000</span>
+      </div>
+
+      <!-- MEDIDOR DE ENERGÍA CHIMELETA (Antes Rock Meter) -->
+      <div class="hud-box rock-meter-box energy-box">
+        <div class="energy-label-wrap">
+          <span class="hud-label">ENERGÍA CHIMELETA</span>
+          <span class="energy-bolt">⚡</span>
+        </div>
+        <div class="rock-meter-track energy-meter-track">
+          <div id="rock-meter-fill" class="rock-meter-fill energy-meter-fill"></div>
+          <div class="circuit-sparkles"></div>
+        </div>
+        <span id="rock-meter-status" class="meter-status-text energy-status-text">¡CHIMELETA CONECTADA!</span>
+      </div>
+
+      <div class="hud-box multiplier-box" id="multiplier-container">
+        <span class="hud-label">CONEXIÓN</span>
+        <div class="multi-indicator">
+          <span id="multiplier-display" class="multiplier-value">1X</span>
+          <div class="multiplier-ring">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              <path id="multiplier-progress" class="circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="hud-box streak-box">
+        <span class="hud-label">RACHA / COMBO</span>
+        <span id="streak-display" class="hud-value">0</span>
+        <span id="max-streak-display" class="hud-subvalue">MÁX: 0</span>
+      </div>
+    </header>
+
+    <!-- ÁREA DE JUEGO CENTRAL (ESCENARIO + COMPAÑEROS + PISTA 3D) -->
+    <main id="stage">
+
+      <!-- Efectos de Fondo de Escenario -->
+      <div class="stage-lighting">
+        <div class="spotlight left"></div>
+        <div class="spotlight center"></div>
+        <div class="spotlight right"></div>
+        <div class="crowd-silhouette"></div>
+      </div>
+
+      <!-- Feedback Flotante (PERFECT, GREAT, MISS) -->
+      <div id="feedback-display" class="feedback-container"></div>
+
+      <!-- ESCENARIO CON HIGHWAY AL CENTRO Y CHIMELETA + PINZAS AL COSTADO -->
+      <div class="stage-arena">
+
+        <!-- LATERAL IZQUIERDO: Mascota Pinza Cocodrilo "Copi" -->
+        <aside class="stage-side-dock dock-left">
+          <div class="mascot-wrapper" id="mascot-copi-box">
+            <div class="mascot-speech-bubble" id="copi-speech">¡Hacé contacto! ⚡</div>
+            <!-- SVG Ilustración de la Pinza Cocodrilo Azul "Copi" -->
+            <svg class="crocodile-mascot-svg" id="mascot-copi" viewBox="0 0 120 150">
+              <!-- Cable flexible que viene de abajo -->
+              <path d="M 60,145 Q 30,125 55,95" fill="none" stroke="#0077b6" stroke-width="8" stroke-linecap="round"/>
+              <!-- Cuerpo / Manga de silicona azul de la pinza -->
+              <path d="M 40,95 C 40,75 50,65 58,62 C 66,65 76,75 76,95 C 76,105 40,105 40,95 Z" fill="#0096c7" stroke="#023e8a" stroke-width="3"/>
+              <!-- Mandíbula metálica superior con dientes -->
+              <path d="M 50,62 L 50,30 L 56,22 L 62,30 L 62,62 Z" fill="#ced4da" stroke="#495057" stroke-width="2"/>
+              <!-- Dientes de cocodrilo -->
+              <polygon points="50,34 54,38 50,42" fill="#fff"/>
+              <polygon points="50,46 54,50 50,54" fill="#fff"/>
+              <polygon points="62,34 58,38 62,42" fill="#fff"/>
+              <polygon points="62,46 58,50 62,54" fill="#fff"/>
+              <!-- Remache / Eje de pivote -->
+              <circle cx="58" cy="58" r="4" fill="#ffd166" stroke="#b07d10" stroke-width="1.5"/>
+              <!-- Ojos tiernos saltones -->
+              <g class="mascot-eyes">
+                <circle cx="48" cy="74" r="8" fill="#ffffff" stroke="#023e8a" stroke-width="2"/>
+                <circle cx="68" cy="74" r="8" fill="#ffffff" stroke="#023e8a" stroke-width="2"/>
+                <circle class="pupil pupil-left" cx="49" cy="74" r="4" fill="#1d3557"/>
+                <circle class="pupil pupil-right" cx="69" cy="74" r="4" fill="#1d3557"/>
+                <circle cx="47" cy="72" r="1.5" fill="#ffffff"/>
+                <circle cx="67" cy="72" r="1.5" fill="#ffffff"/>
+              </g>
+              <!-- Sonrisa simpática en la funda -->
+              <path d="M 52,86 Q 58,92 64,86" fill="none" stroke="#023e8a" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span class="mascot-name">COPI</span>
+          </div>
+        </aside>
+
+        <!-- CENTRO: PISTA 3D / HIGHWAY -->
+        <div class="highway-perspective-wrapper">
+          <div id="highway" class="highway">
+            <!-- Fondo de la pista y líneas divisorias de carriles -->
+            <div class="highway-grid">
+              <div class="speed-lines"></div>
+            </div>
+
+            <!-- Carriles (5 Lanes) -->
+            <div class="lanes-container">
+              <div class="lane" data-lane="0" id="lane-0">
+                <div class="lane-surface"></div>
+              </div>
+              <div class="lane" data-lane="1" id="lane-1">
+                <div class="lane-surface"></div>
+              </div>
+              <div class="lane" data-lane="2" id="lane-2">
+                <div class="lane-surface"></div>
+              </div>
+              <div class="lane" data-lane="3" id="lane-3">
+                <div class="lane-surface"></div>
+              </div>
+              <div class="lane" data-lane="4" id="lane-4">
+                <div class="lane-surface"></div>
+              </div>
+            </div>
+
+            <!-- Capa de Notas que caen -->
+            <div id="notes-container" class="notes-container"></div>
+
+            <!-- Línea de Ejecución / Hit Line -->
+            <div id="hit-line" class="hit-line">
+              <div class="hit-line-glow"></div>
+              <div class="hit-line-bar"></div>
+            </div>
+
+            <!-- BOTONES RECEPTORES COMO CONTACTOS FÍSICOS Y CABLES CON PINZAS -->
+            <div class="fret-targets-container">
+              
+              <!-- Carril 0: Izquierda (Verde) -->
+              <div class="fret-target fret-green" data-lane="0" id="fret-0">
+                <div class="fret-gem conductive-pad pad-green">
+                  <div class="copper-rim"></div>
+                  <div class="contact-rivet"></div>
+                  <span class="key-icon">←</span>
+                  <span class="key-sublabel">IZQ</span>
+                </div>
+                <!-- Cable y Pinza Cocodrilo conectada al receptor -->
+                <div class="fret-cable-attachment cable-green">
+                  <svg class="attachment-clip-svg" viewBox="0 0 24 38">
+                    <!-- Pinza clamp -->
+                    <rect x="7" y="0" width="10" height="18" rx="3" fill="#2d6a4f"/>
+                    <path d="M 5,0 L 19,0 L 12,6 Z" fill="#d8d8d8"/>
+                    <circle cx="12" cy="9" r="2" fill="#ffd166"/>
+                    <!-- Cable saliente -->
+                    <path d="M 12,18 Q 14,28 10,38" fill="none" stroke="#00ff73" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="fret-flare"></div>
+              </div>
+
+              <!-- Carril 1: Abajo (Rojo) -->
+              <div class="fret-target fret-red" data-lane="1" id="fret-1">
+                <div class="fret-gem conductive-pad pad-red">
+                  <div class="copper-rim"></div>
+                  <div class="contact-rivet"></div>
+                  <span class="key-icon">↓</span>
+                  <span class="key-sublabel">ABA</span>
+                </div>
+                <div class="fret-cable-attachment cable-red">
+                  <svg class="attachment-clip-svg" viewBox="0 0 24 38">
+                    <rect x="7" y="0" width="10" height="18" rx="3" fill="#9d0208"/>
+                    <path d="M 5,0 L 19,0 L 12,6 Z" fill="#d8d8d8"/>
+                    <circle cx="12" cy="9" r="2" fill="#ffd166"/>
+                    <path d="M 12,18 Q 9,28 14,38" fill="none" stroke="#ff2a55" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="fret-flare"></div>
+              </div>
+
+              <!-- Carril 2: Arriba (Amarillo) -->
+              <div class="fret-target fret-yellow" data-lane="2" id="fret-2">
+                <div class="fret-gem conductive-pad pad-yellow">
+                  <div class="copper-rim"></div>
+                  <div class="contact-rivet"></div>
+                  <span class="key-icon">↑</span>
+                  <span class="key-sublabel">ARR</span>
+                </div>
+                <div class="fret-cable-attachment cable-yellow">
+                  <svg class="attachment-clip-svg" viewBox="0 0 24 38">
+                    <rect x="7" y="0" width="10" height="18" rx="3" fill="#d4a373"/>
+                    <path d="M 5,0 L 19,0 L 12,6 Z" fill="#d8d8d8"/>
+                    <circle cx="12" cy="9" r="2" fill="#b07d10"/>
+                    <path d="M 12,18 Q 15,26 11,38" fill="none" stroke="#ffea00" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="fret-flare"></div>
+              </div>
+
+              <!-- Carril 3: Derecha (Azul) -->
+              <div class="fret-target fret-blue" data-lane="3" id="fret-3">
+                <div class="fret-gem conductive-pad pad-blue">
+                  <div class="copper-rim"></div>
+                  <div class="contact-rivet"></div>
+                  <span class="key-icon">→</span>
+                  <span class="key-sublabel">DER</span>
+                </div>
+                <div class="fret-cable-attachment cable-blue">
+                  <svg class="attachment-clip-svg" viewBox="0 0 24 38">
+                    <rect x="7" y="0" width="10" height="18" rx="3" fill="#03045e"/>
+                    <path d="M 5,0 L 19,0 L 12,6 Z" fill="#d8d8d8"/>
+                    <circle cx="12" cy="9" r="2" fill="#ffd166"/>
+                    <path d="M 12,18 Q 10,27 15,38" fill="none" stroke="#00e1ff" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="fret-flare"></div>
+              </div>
+
+              <!-- Carril 4: Espacio (Naranja) -->
+              <div class="fret-target fret-orange" data-lane="4" id="fret-4">
+                <div class="fret-gem space-gem conductive-pad pad-orange">
+                  <div class="copper-rim"></div>
+                  <div class="contact-rivet"></div>
+                  <span class="key-icon">␣</span>
+                  <span class="key-sublabel">ESPACIO</span>
+                </div>
+                <div class="fret-cable-attachment cable-orange">
+                  <svg class="attachment-clip-svg" viewBox="0 0 24 38">
+                    <rect x="7" y="0" width="10" height="18" rx="3" fill="#c75100"/>
+                    <path d="M 5,0 L 19,0 L 12,6 Z" fill="#d8d8d8"/>
+                    <circle cx="12" cy="9" r="2" fill="#ffd166"/>
+                    <path d="M 12,18 Q 13,29 12,38" fill="none" stroke="#ff8400" stroke-width="4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="fret-flare"></div>
+              </div>
+
+            </div>
+
+            <!-- Canvas para chispas y partículas de impacto -->
+            <canvas id="particles-canvas" class="particles-canvas" aria-hidden="true"></canvas>
+          </div>
+        </div>
+
+        <!-- LATERAL DERECHO: Chimeleta Ilustrada Interactiva + Pinza Dili -->
+        <aside class="stage-side-dock dock-right">
+          
+          <!-- TARJETA COMPAÑERA CHIMELETA INTERACTIVA -->
+          <div class="chimeleta-companion-card" id="chimeleta-card">
+            <div class="companion-header">
+              <span class="companion-led" id="chimeleta-main-led"></span>
+              <span class="companion-title">CHIMELETA</span>
+              <span class="companion-state-badge" id="chimeleta-state-badge">CONECTADA</span>
+            </div>
+
+            <!-- ILUSTRACIÓN VECTORIAL DE CHIMELETA (Basada en las fotos reales del dispositivo) -->
+            <!-- ILUSTRACIÓN VECTORIAL DE CHIMELETA (Fiel a la placa física y diagrama oficial) -->
+            <div class="chimeleta-illustration-wrapper">
+<svg id="chimeleta-butterfly-svg" class="chimeleta-svg" xmlns="http://www.w3.org/2000/svg" width="800" height="860" viewBox="0 0 800 860" role="img" aria-labelledby="title desc">
+ <title id="title">Chimeleta — encendé el ritmo</title>
+ <desc id="desc">Control naranja con silueta de mariposa, cinco pinzas en sus pestañas y conexión de tierra a la izquierda.</desc>
+ <defs>
+  <linearGradient id="body" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#ffac39"/><stop offset=".36" stop-color="#ff750c"/><stop offset="1" stop-color="#e74b00"/></linearGradient>
+  <linearGradient id="tab" x2="0" y2="1"><stop stop-color="#ffe5a3"/><stop offset="1" stop-color="#b78030"/></linearGradient>
+  <linearGradient id="clip" x2="0" y2="1"><stop stop-color="#fff4a9"/><stop offset=".5" stop-color="#f3c844"/><stop offset="1" stop-color="#a67217"/></linearGradient>
+  <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".45"/></filter>
+  <path id="outline" d="M105 145 C155 108 273 159 329 221 C357 251 374 278 384 299 C395 275 413 273 429 296 C458 239 523 171 602 137 C640 121 676 122 689 151 C715 210 663 320 630 374 C614 400 614 419 622 450 C638 513 660 607 646 670 C639 708 598 722 555 713 C490 700 445 649 413 603 C401 614 389 615 376 604 C347 656 298 717 233 739 C186 755 148 740 143 699 C136 634 142 560 156 486 C163 448 160 427 136 403 C95 362 56 254 70 190 C75 166 88 153 105 145 Z"/>
+  <g id="pin"><rect x="-17" y="-28" width="34" height="63" rx="12" fill="url(#clip)" stroke="#72521b" stroke-width="3"/><path d="M-12 -18 L0 -31 L12 -18 L8 -5 L-8 -5 Z" fill="#dce7e9" stroke="#4c606c" stroke-width="3"/><path d="M-8 -15 L8 -15 M-7 -9 L7 -9" stroke="#596f78" stroke-width="2"/><rect x="-10" y="4" width="20" height="22" rx="7" fill="currentColor"/><path d="M-10 30 L10 30" stroke="#70531d" stroke-width="3"/></g>
+ </defs>
+ 
+ <ellipse cx="400" cy="752" rx="270" ry="26" fill="#060912" opacity=".6"/>
+ <!-- Cables attach to the rear of each clip. -->
+ <g id="cables" fill="none" stroke-width="8" stroke-linecap="round">
+  <path d="M94 101 C72 71 40 99 27 69" stroke="#4be099"/>
+  <path d="M686 81 C712 46 752 81 773 48" stroke="#39d5f5"/>
+  <path d="M401 232 C401 196 374 181 393 145" stroke="#ffe24b"/>
+  <path d="M397 716 C397 745 430 753 414 787" stroke="#ff617f"/>
+  <path d="M652 761 C679 780 680 809 715 811" stroke="#ff9400"/>
+  <path d="M82 436 C23 454 30 562 49 603" stroke="#35dce2"/>
+ </g>
+ <g id="tabs" fill="url(#tab)" stroke="#735128" stroke-width="4">
+  <rect x="85" y="117" width="38" height="58" rx="15" transform="rotate(-28 104 146)"/>
+  <rect x="658" y="99" width="38" height="62" rx="15" transform="rotate(28 677 130)"/>
+  <rect x="384" y="258" width="34" height="57" rx="13"/>
+  <rect x="379" y="593" width="36" height="67" rx="13"/>
+  <rect x="610" y="681" width="40" height="64" rx="15" transform="rotate(-29 630 713)"/>
+  <path d="M115 363 L85 378 L113 438 L145 424 Z"/>
+ </g>
+ <g id="body" filter="url(#shadow)">
+  <use href="#outline" transform="translate(0 9)" fill="#943600" stroke="#65321a" stroke-width="8"/>
+  <use href="#outline" fill="url(#body)" stroke="#74351c" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M104 158 C163 126 274 186 324 244 M447 277 C502 203 611 137 666 151" fill="none" stroke="#ffd294" stroke-width="6" stroke-linecap="round" opacity=".8"/>
+  <path d="M159 689 C164 732 213 733 257 708 M487 666 C546 714 611 718 631 683" fill="none" stroke="#ffb15c" stroke-width="4" opacity=".6"/>
+  <path d="M143 328 Q390 302 648 323" fill="none" stroke="#ffd08d" stroke-width="2" opacity=".24"/>
+ </g>
+ <g id="screws" fill="#384348" stroke="#dca75c" stroke-width="4">
+  <circle cx="120" cy="188" r="10"/><circle cx="647" cy="170" r="10"/>
+  <circle cx="223" cy="685" r="10"/><circle cx="595" cy="666" r="10"/>
+  <circle cx="404" cy="343" r="9"/><circle cx="419" cy="555" r="9"/>
+ </g>
+ <g font-family="Arial, sans-serif" text-anchor="middle">
+  <text x="399" y="394" font-size="37" font-weight="800" letter-spacing="2" fill="#612600">chimeleta</text>
+  <text x="399" y="419" font-size="11" font-weight="bold" letter-spacing="4" fill="#78330b">ENCENDÉ EL RITMO</text>
+  <g id="connector">
+   <rect x="278" y="454" width="244" height="43" rx="5" fill="#ab430b"/>
+   <rect x="283" y="458" width="234" height="34" rx="3" fill="#252c34" stroke="#677079" stroke-width="3"/>
+   <g fill="#dce0dc" font-size="12" font-weight="bold"><text x="298" y="448">W</text><text x="327" y="448">A</text><text x="356" y="448">S</text><text x="385" y="448">D</text><text x="414" y="448">F</text><text x="443" y="448">G</text><text x="472" y="448">H</text><text x="501" y="448">J</text></g>
+   <path d="M298 465 V485 M327 465 V485 M356 465 V485 M385 465 V485 M414 465 V485 M443 465 V485 M472 465 V485 M501 465 V485" stroke="#0a1019" stroke-width="16"/>
+  </g>
+ </g>
+ <g id="clips">
+  <g id="chimeleta-contact-0" class="chimeleta-interactive-node node-green" transform="translate(105 124) rotate(155)" color="#42db94"><use href="#pin"/></g>
+  <g id="chimeleta-contact-3" class="chimeleta-interactive-node node-blue" transform="translate(676 105) rotate(205)" color="#35d5f3"><use href="#pin"/></g>
+  <g id="chimeleta-contact-2" class="chimeleta-interactive-node node-yellow" transform="translate(401 265) rotate(180)" color="#ffe24b"><use href="#pin"/></g>
+  <g id="chimeleta-contact-1" class="chimeleta-interactive-node node-red" transform="translate(397 678)" color="#ff617f"><use href="#pin"/></g>
+  <g id="chimeleta-contact-4" class="chimeleta-interactive-node node-orange" transform="translate(635 731) rotate(-30)" color="#ff9400"><use href="#pin"/></g>
+  <g id="chimeleta-gnd-node" class="chimeleta-gnd-terminal" transform="translate(98 411) rotate(58)" color="#35dce2"><use href="#pin"/></g>
+ </g>
+ <g id="labels" font-family="Arial, sans-serif" font-weight="bold" text-anchor="middle">
+  <g fill="#4be099"><text x="154" y="108" font-size="32">←</text><text x="154" y="126" font-size="11">IZQUIERDA</text></g>
+  <g fill="#39d5f5"><text x="619" y="85" font-size="32">→</text><text x="619" y="103" font-size="11">DERECHA</text></g>
+  <g fill="#ffe24b"><text x="453" y="242" font-size="32">↑</text><text x="453" y="260" font-size="11">ARRIBA</text></g>
+  <g fill="#ff7a93"><text x="449" y="687" font-size="32">↓</text><text x="449" y="707" font-size="11">ABAJO</text></g>
+  <text x="588" y="774" font-size="14" fill="#ffae42">ESPACIO</text>
+  <text x="64" y="374" font-size="14" fill="#35dce2">GND</text>
+ </g>
+</svg>
+
+</div>
+
+            <!-- Indicador de Pulsera GND conectada -->
+            <div class="gnd-indicator-badge" title="La pulsera o anillo conductor va conectado a la toma GND izquierda y cierra el circuito al tocar las teclas">
+              <span class="gnd-icon">⚡</span>
+              <span class="gnd-text">PULSERA GND: CONTACTO IZQ</span>
+            </div>
+
+            <!-- Efecto de Celebración de Chimeleta -->
+            <div id="chimeleta-celebration-badge" class="celebration-badge hidden">
+              ¡CHIMELETA ENCENDIDA! 🎉
+            </div>
+
+            <!-- Mascota Pinza Cocodrilo Amarilla "Dili" -->
+            <div class="mascot-wrapper" id="mascot-dili-box">
+              <svg class="crocodile-mascot-svg" id="mascot-dili" viewBox="0 0 120 130">
+                <path d="M 60,125 Q 85,110 65,85" fill="none" stroke="#e09f3e" stroke-width="8" stroke-linecap="round"/>
+                <path d="M 40,85 C 40,65 50,55 58,52 C 66,55 76,65 76,85 C 76,95 40,95 40,85 Z" fill="#ffb703" stroke="#b07d10" stroke-width="3"/>
+                <path d="M 50,52 L 50,22 L 56,14 L 62,22 L 62,52 Z" fill="#ced4da" stroke="#495057" stroke-width="2"/>
+                <polygon points="50,26 54,30 50,34" fill="#fff"/>
+                <polygon points="62,26 58,30 62,34" fill="#fff"/>
+                <circle cx="58" cy="48" r="4" fill="#d90429" stroke="#590d22" stroke-width="1.5"/>
+                <g class="mascot-eyes">
+                  <circle cx="48" cy="65" r="7.5" fill="#ffffff" stroke="#b07d10" stroke-width="2"/>
+                  <circle cx="68" cy="65" r="7.5" fill="#ffffff" stroke="#b07d10" stroke-width="2"/>
+                  <circle class="pupil pupil-left" cx="49" cy="65" r="3.5" fill="#000"/>
+                  <circle class="pupil pupil-right" cx="69" cy="65" r="3.5" fill="#000"/>
+                  <circle cx="47" cy="63" r="1.5" fill="#ffffff"/>
+                  <circle cx="67" cy="63" r="1.5" fill="#ffffff"/>
+                </g>
+                <path d="M 52,76 Q 58,82 64,76" fill="none" stroke="#7f4f00" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <div class="mascot-speech-bubble" id="dili-speech">¡Qué buen ritmo! 🎶</div>
+              <span class="mascot-name">DILI</span>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </main>
+
+    <!-- PANEL INFERIOR DE CONTROLES Y MODOS -->
+    <footer id="control-panel">
+      <div class="panel-group game-actions">
+        <button id="btn-play-pause" class="arcade-btn btn-primary" tabindex="-1">
+          <span class="btn-icon">▶</span>
+          <span id="btn-play-text">INICIAR JUEGO</span>
+        </button>
+        <button id="btn-restart" class="arcade-btn btn-secondary" tabindex="-1">
+          <span class="btn-icon">↺</span> REINICIAR
+        </button>
+      </div>
+
+      <div class="panel-group game-settings">
+        <!-- Modo de práctica -->
+        <label class="toggle-control" title="En modo práctica no hay fallo y la velocidad es cómoda para aprender">
+          <input type="checkbox" id="practice-mode-toggle" tabindex="-1">
+          <span class="toggle-slider"></span>
+          <span class="toggle-label">🎸 MODO PRÁCTICA</span>
+        </label>
+
+        <!-- Selector de velocidad -->
+        <div class="speed-selector">
+          <span class="selector-label">VELOCIDAD:</span>
+          <div class="speed-buttons">
+            <button class="speed-btn" data-speed="0.6" tabindex="-1">0.6x</button>
+            <button class="speed-btn" data-speed="0.8" tabindex="-1">0.8x</button>
+            <button class="speed-btn active" data-speed="1.0" tabindex="-1">1.0x</button>
+            <button class="speed-btn" data-speed="1.3" tabindex="-1">1.3x</button>
+            <button class="speed-btn" data-speed="1.6" tabindex="-1">1.6x</button>
+          </div>
+        </div>
+
+        <!-- Botón Audio -->
+        <button id="btn-sound-toggle" class="arcade-btn btn-small" tabindex="-1" title="Sonido Sintetizador Retro">
+          🔊 AUDIO
+        </button>
+
+        <!-- Botón Pantalla de Prueba Chimeleta -->
+        <button id="btn-open-test" class="arcade-btn btn-highlight" tabindex="-1">
+          ⚡ TEST CHIMELETA
+        </button>
+      </div>
+    </footer>
+
+    <!-- MODAL / PANTALLA DE PRUEBA DE CONTACTOS (CHIMELETA HARDWARE TEST) -->
+    <div id="test-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>⚡ BANCO DE PRUEBA: CONTROL CHIMELETA</h2>
+          <button id="btn-close-test" class="modal-close-btn" tabindex="-1">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="test-instructions">
+            Colocate la <strong>pulsera o anillo conductor GND</strong> (conectada al contacto izquierdo de tu Chimeleta).
+            Al tocar cualquiera de los 5 contactos físicos (<strong>←, ↓, ↑, →</strong> o <strong>Espacio</strong>) o tu teclado, tu propio cuerpo cerrará el circuito a tierra iluminando cada carril al instante.
+            Podés tocar varios contactos a la vez (acordes) y se ignora la repetición automática del sistema operativo.
+          </p>
+
+          <!-- Visualizador de Carriles en Prueba -->
+          <div class="test-lanes-grid">
+            <div class="test-sensor-box sensor-green" id="sensor-0">
+              <div class="sensor-indicator"></div>
+              <div class="sensor-key">← Flecha Izq</div>
+              <div class="sensor-lane-name">Ala Sup. Izquierda (Verde)</div>
+              <div class="sensor-state" id="sensor-state-0">INACTIVO</div>
+              <div class="sensor-count">Toques: <span id="sensor-count-0">0</span></div>
+            </div>
+
+            <div class="test-sensor-box sensor-red" id="sensor-1">
+              <div class="sensor-indicator"></div>
+              <div class="sensor-key">↓ Flecha Abajo</div>
+              <div class="sensor-lane-name">Centro Inferior (Rojo)</div>
+              <div class="sensor-state" id="sensor-state-1">INACTIVO</div>
+              <div class="sensor-count">Toques: <span id="sensor-count-1">0</span></div>
+            </div>
+
+            <div class="test-sensor-box sensor-yellow" id="sensor-2">
+              <div class="sensor-indicator"></div>
+              <div class="sensor-key">↑ Flecha Arriba</div>
+              <div class="sensor-lane-name">Centro Superior (Amarillo)</div>
+              <div class="sensor-state" id="sensor-state-2">INACTIVO</div>
+              <div class="sensor-count">Toques: <span id="sensor-count-2">0</span></div>
+            </div>
+
+            <div class="test-sensor-box sensor-blue" id="sensor-3">
+              <div class="sensor-indicator"></div>
+              <div class="sensor-key">→ Flecha Der</div>
+              <div class="sensor-lane-name">Ala Sup. Derecha (Azul)</div>
+              <div class="sensor-state" id="sensor-state-3">INACTIVO</div>
+              <div class="sensor-count">Toques: <span id="sensor-count-3">0</span></div>
+            </div>
+
+            <div class="test-sensor-box sensor-orange" id="sensor-4">
+              <div class="sensor-indicator"></div>
+              <div class="sensor-key">␣ Barra Espacio</div>
+              <div class="sensor-lane-name">Ala Inf. Derecha (Naranja)</div>
+              <div class="sensor-state" id="sensor-state-4">INACTIVO</div>
+              <div class="sensor-count">Toques: <span id="sensor-count-4">0</span></div>
+            </div>
+          </div>
+
+          <!-- Diagnóstico en tiempo real -->
+          <div class="test-diagnostic-bar">
+            <div class="diag-item">
+              <span class="diag-label">Pulsaciones Simultáneas:</span>
+              <span id="simultaneous-count" class="diag-value">0</span>
+            </div>
+            <div class="diag-item">
+              <span class="diag-label">Último Acorde Detectado:</span>
+              <span id="last-chord-detected" class="diag-value">Ninguno</span>
+            </div>
+            <div class="diag-item">
+              <span class="diag-label">Toma GND (Masa):</span>
+              <span class="diag-value safe-status">BORNE IZQ (Pulsera)</span>
+            </div>
+            <div class="diag-item">
+              <span class="diag-label">Repetición OS:</span>
+              <span class="diag-value safe-status">FILTRADA</span>
+            </div>
+          </div>
+
+          <div class="test-footer-actions">
+            <button id="btn-reset-test-counts" class="arcade-btn btn-secondary" tabindex="-1">REINICIAR CONTADORES</button>
+            <button id="btn-return-game" class="arcade-btn btn-primary" tabindex="-1">VOLVER AL ESCENARIO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA DE RESULTADOS / CELEBRACIÓN FINAL -->
+    <div id="results-modal" class="modal-overlay hidden">
+      <div class="modal-card results-card">
+        
+        <!-- Ilustración de Mariposa Celebrando -->
+        <div class="results-celebration-graphic">
+          <svg class="results-butterfly-svg" viewBox="0 0 100 85">
+            <path d="M 50,40 C 35,15 10,8 6,28 C 3,46 28,52 46,42 C 30,52 14,68 22,74 C 34,78 44,62 48,46 C 52,62 62,78 74,74 C 82,68 66,52 50,42 C 68,52 93,46 90,28 C 86,8 61,15 50,40 Z" fill="#ff7700"/>
+            <circle cx="50" cy="38" r="4" fill="#ffd166"/>
+          </svg>
+          <div class="results-sparks">⚡ ✨ ⚡</div>
+        </div>
+
+        <h2 class="results-title" id="results-title-text">¡CIRCUITO TOTALMENTE CONECTADO!</h2>
+        <p class="results-subtitle" id="results-subtitle-text">¡Chimeleta encendió todo su ritmo con tu energía!</p>
+
+        <div class="results-rank-wrap">
+          <span class="rank-label">RANGO DE CONEXIÓN</span>
+          <div class="results-rank" id="final-rank">S</div>
+        </div>
+
+        <div class="results-stats">
+          <div class="stat-row">
+            <span>PUNTAJE FINAL:</span>
+            <strong id="final-score">0</strong>
+          </div>
+          <div class="stat-row">
+            <span>MÁXIMA RACHA:</span>
+            <strong id="final-streak">0</strong>
+          </div>
+          <div class="stat-row">
+            <span>CONEXIONES PERFECTAS:</span>
+            <strong id="final-perfect" class="c-perfect">0</strong>
+          </div>
+          <div class="stat-row">
+            <span>CONEXIONES BUENAS:</span>
+            <strong id="final-good" class="c-good">0</strong>
+          </div>
+          <div class="stat-row">
+            <span>DESCONEXIONES (FALLOS):</span>
+            <strong id="final-misses" class="c-miss">0</strong>
+          </div>
+          <div class="stat-row">
+            <span>PRECISIÓN DE CONTACTO:</span>
+            <strong id="final-accuracy">100%</strong>
+          </div>
+        </div>
+
+        <div class="results-actions">
+          <button id="btn-play-again" class="arcade-btn btn-primary start-big-btn" tabindex="-1">
+            🔄 ¡VOLVER A CONECTAR Y JUGAR!
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

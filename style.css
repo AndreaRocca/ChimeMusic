@@ -1,0 +1,1723 @@
+/* ==========================================================================
+   CHIMELETA: ENCENDÉ EL RITMO - IDENTIDAD VISUAL Y ESTILOS DE JUEGO
+   Estética alegre, musical, artesanal (maker) y arcade
+   ========================================================================== */
+
+:root {
+  --color-green: #00ff73;
+  --color-green-glow: rgba(0, 255, 115, 0.6);
+  --color-red: #ff2a55;
+  --color-red-glow: rgba(255, 42, 85, 0.6);
+  --color-yellow: #ffea00;
+  --color-yellow-glow: rgba(255, 234, 0, 0.6);
+  --color-blue: #00e1ff;
+  --color-blue-glow: rgba(0, 225, 255, 0.6);
+  --color-orange: #ff8400;
+  --color-orange-glow: rgba(255, 132, 0, 0.6);
+
+  --color-copper: #d4af37;
+  --color-chimeleta-orange: #ff6200;
+
+  --font-arcade: 'Orbitron', -apple-system, sans-serif;
+  --font-rock: 'Chakra Petch', sans-serif;
+  --font-friendly: 'Fredoka', cursive, sans-serif;
+
+  --highway-angle: 52deg;
+  --highway-width: 520px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #070811;
+  color: #ffffff;
+  font-family: var(--font-rock);
+}
+
+#game-app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: radial-gradient(circle at 50% 25%, #16182e 0%, #080812 75%, #020306 100%);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   PANTALLA DE INICIO (SPLASH SCREEN / "CHIMELETA: ENCENDÉ EL RITMO")
+   ========================================================================== */
+.start-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(6, 7, 15, 0.94);
+  backdrop-filter: blur(14px);
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.start-screen-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.start-card {
+  background: #111326;
+  border: 3px solid #ff7700;
+  border-radius: 20px;
+  max-width: 760px;
+  width: 90%;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(255, 119, 0, 0.3), 0 20px 40px rgba(0,0,0,0.8);
+  animation: pop-in 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* LOGO ARTESANAL CHIMELETA */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.logo-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: var(--font-arcade);
+  font-weight: 900;
+  font-size: 54px;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+
+.logo-letter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.l-h {
+  position: relative;
+  width: 44px;
+  height: 56px;
+}
+.resistor-svg {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 34px;
+  height: 54px;
+  z-index: -1;
+  opacity: 0.95;
+}
+
+.l-m {
+  width: 60px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.butterfly-logo-icon {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px #ff6600);
+  animation: butterfly-float 3s ease-in-out infinite alternate;
+}
+
+@keyframes butterfly-float {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-4px) rotate(2deg); }
+}
+
+.l-t {
+  position: relative;
+  width: 44px;
+  height: 56px;
+}
+.pcb-t-svg {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 36px;
+  height: 52px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.decorative-clip-cable {
+  width: 340px;
+  height: 30px;
+  margin-top: -6px;
+  filter: drop-shadow(0 0 6px #00b4d8);
+}
+
+.logo-tagline {
+  font-family: var(--font-arcade);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #ffd166;
+  margin-top: 4px;
+  text-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+}
+
+.start-description {
+  font-size: 15px;
+  color: #ccd2f0;
+  line-height: 1.55;
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+.start-description strong {
+  color: #ffd166;
+}
+
+.start-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.start-big-btn {
+  font-size: 18px !important;
+  padding: 14px 28px !important;
+  width: 100%;
+  justify-content: center;
+  letter-spacing: 2px;
+}
+
+.start-secondary-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.start-contacts-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.contact-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: #191b30;
+  border: 1px solid #363a5e;
+  color: #adb5d6;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.contact-pill .k-arrow {
+  font-family: var(--font-arcade);
+  font-weight: 900;
+  font-size: 13px;
+}
+.c-green .k-arrow { color: var(--color-green); }
+.c-red .k-arrow { color: var(--color-red); }
+.c-yellow .k-arrow { color: var(--color-yellow); }
+.c-blue .k-arrow { color: var(--color-blue); }
+.c-orange .k-arrow { color: var(--color-orange); }
+.c-gnd {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.15);
+  color: #ffffff;
+}
+.c-gnd .k-arrow { color: #00d4ff; }
+
+/* ==========================================================================
+   HUD SUPERIOR Y MARCA DISCRETA EN PARTIDA
+   ========================================================================== */
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: linear-gradient(180deg, rgba(10, 11, 23, 0.98) 0%, rgba(10, 11, 23, 0.75) 80%, transparent 100%);
+  border-bottom: 2px solid rgba(255, 119, 0, 0.2);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+/* MARCA DISCRETA EN JUEGO */
+.hud-brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(25, 27, 46, 0.65);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 119, 0, 0.35);
+}
+
+.brand-mini-butterfly {
+  width: 24px;
+  height: 20px;
+  filter: drop-shadow(0 0 6px #ff7700);
+}
+
+.brand-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-arcade);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #ffaa00;
+}
+
+.brand-sub {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #9ea8d1;
+}
+
+.hud-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 110px;
+}
+
+.hud-label {
+  font-family: var(--font-arcade);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #8e95b3;
+  margin-bottom: 2px;
+}
+
+.hud-value {
+  font-family: var(--font-arcade);
+  font-size: 26px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.hud-subvalue {
+  font-size: 11px;
+  color: #ffd242;
+  font-weight: 700;
+}
+
+/* MEDIDOR DE ENERGÍA CHIMELETA (Reemplazo del Rock Meter) */
+.energy-box {
+  min-width: 240px;
+}
+
+.energy-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.energy-bolt {
+  font-size: 12px;
+  color: #ffd000;
+  animation: pulse-bolt 1.2s infinite alternate;
+}
+@keyframes pulse-bolt {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px #ffbb00); }
+  100% { transform: scale(1.3); filter: drop-shadow(0 0 8px #ff7700); }
+}
+
+.energy-meter-track {
+  width: 100%;
+  height: 16px;
+  background: #131526;
+  border-radius: 10px;
+  border: 2px solid #3c426b;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.9);
+}
+
+.energy-meter-fill {
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff2a55 0%, #ffea00 50%, #00ff73 85%, #00e1ff 100%);
+  transition: width 0.15s ease-out;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 255, 115, 0.7);
+}
+
+.energy-status-text {
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  margin-top: 3px;
+  color: #00ff88;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.7);
+}
+
+/* MULTIPLICADOR CON ANILLO CIRCULAR */
+.multi-indicator {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.multiplier-value {
+  font-family: var(--font-arcade);
+  font-size: 19px;
+  font-weight: 900;
+  color: #ffffff;
+  z-index: 2;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.multiplier-box.on-fire .multiplier-value {
+  color: #ffe600;
+  animation: pulse-fire 0.6s infinite alternate;
+}
+
+.multiplier-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.circular-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 3.5;
+}
+.circle-fill {
+  fill: none;
+  stroke: #00d4ff;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.15s ease;
+}
+.multiplier-box.on-fire .circle-fill {
+  stroke: #ff9900;
+  filter: drop-shadow(0 0 6px #ff5500);
+}
+
+/* ==========================================================================
+   ESCENARIO Y ARENA (HIGHWAY AL CENTRO + COMPAÑEROS AL COSTADO)
+   ========================================================================== */
+#stage {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.stage-lighting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.spotlight {
+  position: absolute;
+  top: -20%;
+  width: 300px;
+  height: 130%;
+  opacity: 0.16;
+  filter: blur(50px);
+  transform-origin: top center;
+  animation: sweep 6s ease-in-out infinite alternate;
+}
+.spotlight.left {
+  left: 8%;
+  background: radial-gradient(ellipse at top, #ff6600 0%, transparent 70%);
+}
+.spotlight.center {
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at top, #00d4ff 0%, transparent 70%);
+  animation-duration: 4.5s;
+}
+.spotlight.right {
+  right: 8%;
+  background: radial-gradient(ellipse at top, #ffea00 0%, transparent 70%);
+  animation-delay: 1.5s;
+}
+
+@keyframes sweep {
+  0% { transform: rotate(-15deg); opacity: 0.1; }
+  100% { transform: rotate(15deg); opacity: 0.24; }
+}
+
+.crowd-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background: linear-gradient(0deg, #05050b 60%, transparent 100%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.stage-arena {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  gap: 20px;
+  padding: 0 10px;
+}
+
+/* ==========================================================================
+   LATERALES / DOCKS FUERA DE LA PISTA (MASCOTAS Y CHIMELETA)
+   ========================================================================== */
+.stage-side-dock {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 25;
+  padding-bottom: 30px;
+  pointer-events: auto;
+}
+
+.dock-left {
+  width: 140px;
+}
+.dock-right {
+  width: 250px;
+}
+
+/* MASCOTAS PINZAS COCODRILO ("COPI" Y "DILI") */
+.mascot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: mascot-bob 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes mascot-bob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.crocodile-mascot-svg {
+  width: 90px;
+  height: 110px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+  transition: transform 0.15s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.mascot-wrapper.jaw-snap .crocodile-mascot-svg {
+  transform: scale(1.12) rotate(-5deg);
+}
+
+.mascot-name {
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #ffd166;
+  margin-top: 4px;
+}
+
+.mascot-speech-bubble {
+  background: #ffffff;
+  color: #0b0c14;
+  font-family: var(--font-friendly);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  position: relative;
+  white-space: nowrap;
+  opacity: 0.95;
+  transition: transform 0.15s ease;
+}
+
+.mascot-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: #ffffff transparent;
+}
+
+/* ==========================================================================
+   TARJETA COMPAÑERA ILUSTRADA DE CHIMELETA (LATERAL DERECHO)
+   ========================================================================== */
+.chimeleta-companion-card {
+  background: rgba(18, 20, 38, 0.92);
+  border: 2px solid #ff7700;
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(255, 119, 0, 0.25), 0 10px 20px rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+.companion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 119, 0, 0.2);
+}
+
+.companion-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+  animation: led-blink 1.8s infinite;
+}
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.companion-title {
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  color: #ffaa00;
+}
+
+.companion-state-badge {
+  font-family: var(--font-arcade);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 8px;
+  background: #0f3d24;
+  color: #00ff88;
+  border: 1px solid #00ff88;
+  font-weight: 700;
+}
+
+.chimeleta-illustration-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 4px 0;
+}
+
+.chimeleta-svg {
+  width: 100%;
+  max-width: 210px;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.8));
+  transition: transform 0.15s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* ANIMACIÓN DE CELEBRACIÓN DE CHIMELETA (ALETEOS EN COMBOS) */
+.chimeleta-svg.flutter {
+  animation: wing-flutter 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes wing-flutter {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.08) rotate(-3deg); filter: drop-shadow(0 0 20px #ffea00); }
+  100% { transform: scale(1.08) rotate(3deg); filter: drop-shadow(0 0 25px #ff7700); }
+}
+
+/* NODOS Y CONTACTOS INTERACTIVOS DENTRO DE LA ILUSTRACIÓN */
+.chimeleta-interactive-node {
+  transition: transform 0.08s ease;
+  cursor: pointer;
+}
+
+/* LEDS EN LA PUNTA DE LOS LÓBULOS Y OREJITAS EN EXTREMIDADES */
+.lobe-led {
+  transition: fill 0.08s ease, filter 0.08s ease;
+}
+.extremity-loop {
+  transition: stroke 0.08s ease, filter 0.08s ease;
+}
+
+/* Estado de contacto cerrado: El LED se enciende intensamente en la punta del lóbulo */
+.node-green.node-active .lobe-led {
+  fill: #70ffaa;
+  filter: drop-shadow(0 0 16px var(--color-green)) drop-shadow(0 0 28px var(--color-green));
+}
+.node-red.node-active .lobe-led {
+  fill: #ff859d;
+  filter: drop-shadow(0 0 16px var(--color-red)) drop-shadow(0 0 28px var(--color-red));
+}
+.node-yellow.node-active .lobe-led {
+  fill: #fff799;
+  filter: drop-shadow(0 0 16px var(--color-yellow)) drop-shadow(0 0 28px var(--color-yellow));
+}
+.node-blue.node-active .lobe-led {
+  fill: #99f0ff;
+  filter: drop-shadow(0 0 16px var(--color-blue)) drop-shadow(0 0 28px var(--color-blue));
+}
+.node-orange.node-active .lobe-led {
+  fill: #ffbe7a;
+  filter: drop-shadow(0 0 16px var(--color-orange)) drop-shadow(0 0 28px var(--color-orange));
+}
+
+.chimeleta-interactive-node.node-active .extremity-loop {
+  stroke: #ffffff;
+  filter: drop-shadow(0 0 10px #ffffff);
+}
+.chimeleta-interactive-node.node-active text {
+  text-shadow: 0 0 8px #ffffff;
+}
+
+.celebration-badge {
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  font-weight: 900;
+  color: #000;
+  background: linear-gradient(90deg, #ffea00, #ff7700);
+  padding: 4px 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 234, 0, 0.8);
+  margin-top: 6px;
+  letter-spacing: 1px;
+  animation: pulse-fire 0.5s infinite alternate;
+}
+
+/* BORNE GND (TIERRA/MASA) EN LA ILUSTRACIÓN */
+.chimeleta-gnd-terminal {
+  transition: transform 0.08s ease;
+}
+.chimeleta-gnd-terminal text {
+  text-shadow: 0 0 6px #00d4ff;
+}
+.chimeleta-gnd-terminal .gnd-wire {
+  transition: stroke 0.08s ease, filter 0.08s ease;
+}
+.chimeleta-gnd-terminal.gnd-active rect {
+  stroke: #ffffff;
+  filter: drop-shadow(0 0 12px #00e1ff);
+}
+.chimeleta-gnd-terminal.gnd-active .gnd-wire {
+  stroke: #ffffff;
+  filter: drop-shadow(0 0 10px #00e1ff);
+}
+.chimeleta-gnd-terminal.gnd-active .gnd-bracelet-icon rect {
+  fill: #00b4d8;
+  filter: drop-shadow(0 0 10px #00e1ff);
+}
+
+.gnd-indicator-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: 12px;
+  padding: 4px 10px;
+  margin-top: 6px;
+  font-family: var(--font-arcade);
+  font-size: 10px;
+  font-weight: 800;
+  color: #00e1ff;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+.gnd-indicator-badge .gnd-icon {
+  font-size: 11px;
+  animation: pulse-bolt 1.5s infinite alternate;
+}
+
+/* ==========================================================================
+   PISTA 3D / HIGHWAY DE GUITAR HERO (CENTRO)
+   ========================================================================== */
+.highway-perspective-wrapper {
+  perspective: 680px;
+  perspective-origin: 50% 18%;
+  width: var(--highway-width);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  padding-bottom: 25px;
+}
+
+.highway {
+  position: relative;
+  width: 100%;
+  height: 640px;
+  transform: rotateX(var(--highway-angle));
+  transform-origin: bottom center;
+  background: linear-gradient(180deg, #070712 0%, #0e0f22 70%, #15162e 100%);
+  border-left: 6px solid #ff7700;
+  border-right: 6px solid #ff7700;
+  box-shadow: 
+    0 0 35px rgba(0, 0, 0, 0.9),
+    inset 0 0 25px rgba(0, 0, 0, 0.9),
+    -10px 0 25px rgba(255, 119, 0, 0.25),
+    10px 0 25px rgba(0, 212, 255, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.highway-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.speed-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0px,
+    rgba(255, 255, 255, 0.06) 2px,
+    transparent 2px,
+    transparent 70px
+  );
+  animation: highway-roll 1.2s linear infinite;
+}
+
+@keyframes highway-roll {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0%); }
+}
+
+/* CARRILES */
+.lanes-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.lane {
+  flex: 1;
+  position: relative;
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.06s ease;
+}
+.lane:last-child {
+  border-right: none;
+}
+
+.lane-surface {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.06s ease-out;
+}
+
+.lane.active-0 .lane-surface {
+  background: linear-gradient(0deg, var(--color-green-glow) 0%, rgba(0,255,115,0.06) 60%, transparent 100%);
+  opacity: 1;
+}
+.lane.active-1 .lane-surface {
+  background: linear-gradient(0deg, var(--color-red-glow) 0%, rgba(255,42,85,0.06) 60%, transparent 100%);
+  opacity: 1;
+}
+.lane.active-2 .lane-surface {
+  background: linear-gradient(0deg, var(--color-yellow-glow) 0%, rgba(255,234,0,0.06) 60%, transparent 100%);
+  opacity: 1;
+}
+.lane.active-3 .lane-surface {
+  background: linear-gradient(0deg, var(--color-blue-glow) 0%, rgba(0,225,255,0.06) 60%, transparent 100%);
+  opacity: 1;
+}
+.lane.active-4 .lane-surface {
+  background: linear-gradient(0deg, var(--color-orange-glow) 0%, rgba(255,132,0,0.06) 60%, transparent 100%);
+  opacity: 1;
+}
+
+/* LÍNEA DE EJECUCIÓN (HIT LINE) */
+.hit-line {
+  position: absolute;
+  bottom: 84px;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  z-index: 10;
+  pointer-events: none;
+}
+.hit-line-bar {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 15px #ffffff, 0 0 30px #ffaa00;
+}
+.hit-line-glow {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+}
+
+/* ==========================================================================
+   RECEPTORES INFERIORES: CONTACTOS DE COBRE CON CABLES Y PINZAS
+   ========================================================================== */
+.fret-targets-container {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.fret-target {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Contacto conductivo estilo circuito de Chimeleta */
+.conductive-pad {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: #141524;
+  border: 4px solid var(--color-copper);
+  box-shadow: 0 8px 14px rgba(0,0,0,0.9), inset 0 3px 6px rgba(255,255,255,0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: transform 0.05s ease, box-shadow 0.05s ease, border-color 0.05s ease;
+  transform: translateY(0);
+}
+
+.conductive-pad .contact-rivet {
+  position: absolute;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e09f3e;
+  box-shadow: 0 0 2px rgba(0,0,0,0.8);
+}
+
+.conductive-pad .key-icon {
+  font-family: var(--font-arcade);
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.conductive-pad .key-sublabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 2px;
+  color: #adb5d6;
+}
+
+.space-gem {
+  border-radius: 20px;
+  width: 78px;
+  height: 62px;
+}
+.space-gem .key-icon {
+  font-size: 19px;
+}
+
+/* Colores de Símbolos */
+.fret-green .key-icon { color: var(--color-green); text-shadow: 0 0 8px var(--color-green); }
+.fret-red .key-icon { color: var(--color-red); text-shadow: 0 0 8px var(--color-red); }
+.fret-yellow .key-icon { color: var(--color-yellow); text-shadow: 0 0 8px var(--color-yellow); }
+.fret-blue .key-icon { color: var(--color-blue); text-shadow: 0 0 8px var(--color-blue); }
+.fret-orange .key-icon { color: var(--color-orange); text-shadow: 0 0 8px var(--color-orange); }
+
+/* CABLES Y PINZAS ADJUNTOS A LOS RECEPTORES */
+.fret-cable-attachment {
+  position: absolute;
+  bottom: -22px;
+  width: 24px;
+  height: 38px;
+  pointer-events: none;
+  z-index: 16;
+}
+.attachment-clip-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+
+/* ESTADO PRESIONADO */
+.fret-target.pressed .conductive-pad {
+  transform: translateY(6px) scale(0.94);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.9);
+}
+
+.fret-target.fret-green.pressed .conductive-pad {
+  border-color: var(--color-green);
+  background: radial-gradient(circle, #02471b 20%, #071f11 100%);
+  box-shadow: 0 0 25px var(--color-green);
+}
+.fret-target.fret-red.pressed .conductive-pad {
+  border-color: var(--color-red);
+  background: radial-gradient(circle, #4d0514 20%, #200409 100%);
+  box-shadow: 0 0 25px var(--color-red);
+}
+.fret-target.fret-yellow.pressed .conductive-pad {
+  border-color: var(--color-yellow);
+  background: radial-gradient(circle, #4d4400 20%, #242001 100%);
+  box-shadow: 0 0 25px var(--color-yellow);
+}
+.fret-target.fret-blue.pressed .conductive-pad {
+  border-color: var(--color-blue);
+  background: radial-gradient(circle, #02384f 20%, #011520 100%);
+  box-shadow: 0 0 25px var(--color-blue);
+}
+.fret-target.fret-orange.pressed .conductive-pad {
+  border-color: var(--color-orange);
+  background: radial-gradient(circle, #522700 20%, #241101 100%);
+  box-shadow: 0 0 25px var(--color-orange);
+}
+
+/* FOGONAZO DE CONTACTO CERRADO */
+.fret-flare {
+  position: absolute;
+  top: -15px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.08s ease, transform 0.08s ease;
+}
+
+.fret-target.hit-flare .fret-flare {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.fret-green .fret-flare { background: radial-gradient(circle, #ffffff 0%, var(--color-green) 50%, transparent 80%); }
+.fret-red .fret-flare { background: radial-gradient(circle, #ffffff 0%, var(--color-red) 50%, transparent 80%); }
+.fret-yellow .fret-flare { background: radial-gradient(circle, #ffffff 0%, var(--color-yellow) 50%, transparent 80%); }
+.fret-blue .fret-flare { background: radial-gradient(circle, #ffffff 0%, var(--color-blue) 50%, transparent 80%); }
+.fret-orange .fret-flare { background: radial-gradient(circle, #ffffff 0%, var(--color-orange) 50%, transparent 80%); }
+
+/* ==========================================================================
+   NOTAS QUE CAEN (GEMS CONDUCTIVAS)
+   ========================================================================== */
+.notes-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 8;
+}
+
+.note {
+  position: absolute;
+  width: 62px;
+  height: 28px;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-50%);
+  will-change: transform, top;
+}
+
+.note::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 15%;
+  width: 70%;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 4px;
+}
+
+.note.lane-0 {
+  background: radial-gradient(circle at 50% 30%, #55ff99 0%, #00b348 100%);
+  box-shadow: 0 0 16px var(--color-green);
+}
+.note.lane-1 {
+  background: radial-gradient(circle at 50% 30%, #ff6b87 0%, #bd092c 100%);
+  box-shadow: 0 0 16px var(--color-red);
+}
+.note.lane-2 {
+  background: radial-gradient(circle at 50% 30%, #fff16b 0%, #b89d00 100%);
+  box-shadow: 0 0 16px var(--color-yellow);
+}
+.note.lane-3 {
+  background: radial-gradient(circle at 50% 30%, #6be7ff 0%, #007cb8 100%);
+  box-shadow: 0 0 16px var(--color-blue);
+}
+.note.lane-4 {
+  background: radial-gradient(circle at 50% 30%, #ffaa55 0%, #b85000 100%);
+  box-shadow: 0 0 16px var(--color-orange);
+  width: 74px;
+  border-radius: 16px;
+}
+
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
+}
+
+/* ==========================================================================
+   FEEDBACK FLOTANTE (PERFECT, GREAT, GOOD, MISS)
+   ========================================================================== */
+.feedback-container {
+  position: absolute;
+  bottom: 240px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.judgment-popup {
+  font-family: var(--font-arcade);
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: judgment-anim 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+  text-shadow: 0 0 20px currentColor, 0 4px 6px #000;
+}
+
+.judgment-popup.perfect {
+  color: #00ffcc;
+  font-size: 40px;
+}
+.judgment-popup.great {
+  color: #ffea00;
+  font-size: 34px;
+}
+.judgment-popup.good {
+  color: #00d4ff;
+  font-size: 28px;
+}
+.judgment-popup.miss {
+  color: #ff2255;
+  font-size: 30px;
+  animation: miss-anim 0.45s ease-out forwards;
+}
+
+@keyframes judgment-anim {
+  0% { transform: translateY(15px) scale(0.6); opacity: 0; }
+  30% { transform: translateY(-10px) scale(1.15); opacity: 1; }
+  70% { transform: translateY(-15px) scale(1); opacity: 1; }
+  100% { transform: translateY(-30px) scale(0.85); opacity: 0; }
+}
+
+@keyframes miss-anim {
+  0% { transform: translateY(0) scale(1.1) rotate(-4deg); opacity: 1; }
+  25% { transform: translateY(5px) scale(1.1) rotate(4deg); }
+  50% { transform: translateY(10px) scale(1) rotate(-3deg); }
+  100% { transform: translateY(25px) scale(0.8); opacity: 0; }
+}
+
+/* ==========================================================================
+   PANEL INFERIOR DE CONTROLES
+   ========================================================================== */
+#control-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  background: #0c0d1c;
+  border-top: 2px solid #232742;
+  z-index: 50;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.panel-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.arcade-btn {
+  font-family: var(--font-arcade);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  outline: none !important;
+}
+
+.arcade-btn:focus {
+  outline: none !important;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #ff8400 0%, #c44d00 100%);
+  color: #ffffff;
+  border-color: #ffd080;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(255, 132, 0, 0.4);
+}
+.btn-primary:hover {
+  background: linear-gradient(180deg, #ff9922 0%, #de5900 100%);
+  box-shadow: 0 6px 18px rgba(255, 132, 0, 0.6);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: #1c1e33;
+  color: #d1d5ed;
+  border-color: #3b3f63;
+}
+.btn-secondary:hover {
+  background: #272a47;
+  color: #ffffff;
+}
+
+.btn-highlight {
+  background: linear-gradient(180deg, #00d4ff 0%, #0077b3 100%);
+  color: #031521;
+  font-weight: 900;
+  border-color: #99f0ff;
+  box-shadow: 0 0 14px rgba(0, 212, 255, 0.4);
+}
+.btn-highlight:hover {
+  background: linear-gradient(180deg, #42e0ff 0%, #0094e0 100%);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.btn-small {
+  padding: 7px 11px;
+  font-size: 11px;
+  background: #191b2e;
+  color: #abb2d6;
+  border-color: #363959;
+}
+.btn-small.active {
+  background: #00e57a;
+  color: #032411;
+  border-color: #94ffcf;
+  font-weight: 800;
+}
+
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: #151629;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #333654;
+}
+.toggle-control input { display: none; }
+.toggle-slider {
+  width: 36px;
+  height: 20px;
+  background: #2d3047;
+  border-radius: 10px;
+  position: relative;
+  transition: background 0.2s ease;
+}
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+.toggle-control input:checked + .toggle-slider { background: #00e57a; }
+.toggle-control input:checked + .toggle-slider::after { transform: translateX(16px); }
+.toggle-label { font-size: 11px; font-weight: 700; color: #cfd4f0; }
+
+.speed-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #151629;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #333654;
+}
+.selector-label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #8b92b5;
+  font-weight: 700;
+}
+.speed-buttons { display: flex; gap: 4px; }
+.speed-btn {
+  background: transparent;
+  border: 1px solid #393d61;
+  color: #9fa7cc;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+.speed-btn:hover { background: #292c45; color: #fff; }
+.speed-btn.active {
+  background: #00d4ff;
+  color: #031726;
+  border-color: #00d4ff;
+  font-weight: 900;
+}
+
+/* ==========================================================================
+   MODAL DE PRUEBA DE HARDWARE
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 5, 12, 0.88);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-card {
+  background: #121324;
+  border: 2px solid #ff7700;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 820px;
+  box-shadow: 0 0 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 119, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: pop-in 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #181930;
+  border-bottom: 2px solid #2e3357;
+}
+
+.modal-header h2 {
+  font-family: var(--font-arcade);
+  font-size: 17px;
+  color: #00d4ff;
+  letter-spacing: 1.5px;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #929bbd;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+}
+.modal-close-btn:hover { color: #ffffff; }
+
+.modal-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.test-instructions {
+  color: #c7cdf0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.test-lanes-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.test-sensor-box {
+  background: #17192e;
+  border: 2px solid #34395c;
+  border-radius: 10px;
+  padding: 14px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 7px;
+  transition: all 0.08s ease;
+}
+
+.sensor-indicator {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #252845;
+  border: 2px solid #4a507a;
+  transition: all 0.08s ease;
+}
+
+.sensor-key {
+  font-family: var(--font-arcade);
+  font-weight: 900;
+  font-size: 12px;
+  color: #ffffff;
+}
+.sensor-lane-name {
+  font-size: 10px;
+  color: #8b93b8;
+}
+.sensor-state {
+  font-family: var(--font-arcade);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: #23253d;
+  color: #7b84aa;
+}
+.sensor-count {
+  font-size: 11px;
+  color: #ffd000;
+  font-weight: 700;
+}
+
+.test-sensor-box.active { transform: translateY(-3px); }
+.sensor-green.active {
+  border-color: var(--color-green);
+  box-shadow: 0 0 20px var(--color-green);
+  background: rgba(0, 255, 115, 0.15);
+}
+.sensor-green.active .sensor-indicator {
+  background: var(--color-green);
+  box-shadow: 0 0 16px var(--color-green);
+}
+.sensor-green.active .sensor-state { background: var(--color-green); color: #000; }
+
+.sensor-red.active {
+  border-color: var(--color-red);
+  box-shadow: 0 0 20px var(--color-red);
+  background: rgba(255, 42, 85, 0.15);
+}
+.sensor-red.active .sensor-indicator {
+  background: var(--color-red);
+  box-shadow: 0 0 16px var(--color-red);
+}
+.sensor-red.active .sensor-state { background: var(--color-red); color: #fff; }
+
+.sensor-yellow.active {
+  border-color: var(--color-yellow);
+  box-shadow: 0 0 20px var(--color-yellow);
+  background: rgba(255, 234, 0, 0.15);
+}
+.sensor-yellow.active .sensor-indicator {
+  background: var(--color-yellow);
+  box-shadow: 0 0 16px var(--color-yellow);
+}
+.sensor-yellow.active .sensor-state { background: var(--color-yellow); color: #000; }
+
+.sensor-blue.active {
+  border-color: var(--color-blue);
+  box-shadow: 0 0 20px var(--color-blue);
+  background: rgba(0, 225, 255, 0.15);
+}
+.sensor-blue.active .sensor-indicator {
+  background: var(--color-blue);
+  box-shadow: 0 0 16px var(--color-blue);
+}
+.sensor-blue.active .sensor-state { background: var(--color-blue); color: #000; }
+
+.sensor-orange.active {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 20px var(--color-orange);
+  background: rgba(255, 132, 0, 0.15);
+}
+.sensor-orange.active .sensor-indicator {
+  background: var(--color-orange);
+  box-shadow: 0 0 16px var(--color-orange);
+}
+.sensor-orange.active .sensor-state { background: var(--color-orange); color: #000; }
+
+.test-diagnostic-bar {
+  display: flex;
+  justify-content: space-around;
+  background: #17182c;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #2f3454;
+}
+.diag-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.diag-label { font-size: 11px; color: #8890b5; }
+.diag-value {
+  font-family: var(--font-arcade);
+  font-size: 15px;
+  font-weight: 700;
+  color: #00d4ff;
+}
+.diag-value.safe-status { color: #00ff88; }
+.test-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   PANTALLA DE RESULTADOS CELEBRATORIA
+   ========================================================================== */
+.results-card {
+  max-width: 500px;
+  padding: 28px 24px;
+  text-align: center;
+  align-items: center;
+}
+
+.results-celebration-graphic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.results-butterfly-svg {
+  width: 72px;
+  height: 60px;
+  filter: drop-shadow(0 0 14px #ff7700);
+  animation: butterfly-float 2s infinite alternate;
+}
+
+.results-sparks {
+  font-size: 16px;
+  letter-spacing: 6px;
+  margin-top: 4px;
+}
+
+.results-title {
+  font-family: var(--font-arcade);
+  font-size: 20px;
+  color: #ffd000;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.results-subtitle {
+  font-size: 13px;
+  color: #b5bddf;
+  margin-bottom: 12px;
+}
+
+.results-rank-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6px 0 16px;
+}
+
+.rank-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #8c93b3;
+  font-family: var(--font-arcade);
+}
+
+.results-rank {
+  font-family: var(--font-arcade);
+  font-size: 64px;
+  font-weight: 900;
+  color: #00ff88;
+  text-shadow: 0 0 25px #00ff88;
+  line-height: 1;
+}
+
+.results-stats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 12px;
+  background: #17182c;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.c-perfect { color: #00ffcc; }
+.c-good { color: #ffe600; }
+.c-miss { color: #ff2255; }
+
+.results-actions {
+  width: 100%;
+}
+.results-actions button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   RESPONSIVIDAD Y ADAPTACIÓN EN DISPOSITIVOS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .stage-arena {
+    gap: 10px;
+  }
+  .dock-left {
+    display: none; /* En pantallas medianas ocultar mascota izquierda para priorizar Chimeleta */
+  }
+  .dock-right {
+    width: 210px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --highway-width: 96vw;
+    --highway-angle: 45deg;
+  }
+  .dock-right {
+    display: none; /* En móviles dar 100% de espacio a los 5 carriles */
+  }
+  .hud-value { font-size: 20px; }
+  .energy-box { min-width: 140px; }
+  .test-lanes-grid { grid-template-columns: 1fr; }
+  .conductive-pad { width: 54px; height: 54px; }
+  .space-gem { width: 62px; height: 50px; }
+  .note { width: 50px; height: 24px; }
+  .note.lane-4 { width: 60px; }
+  .logo-title-wrap { font-size: 38px; }
+}
